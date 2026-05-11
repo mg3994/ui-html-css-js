@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Dashboard | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <div id="sidebar-placeholder"></div>
+
+        <main class="dashboard-main">
+            <header class="flex-between mb-4">
+                <h1>Mentor Hub</h1>
+                <div class="flex-center" style="gap: 1rem;">
+                    <button class="btn btn-primary btn-sm">Go Live 🎥</button>
+                </div>
+            </header>
+
+            <div class="stats-card-grid">
+                <div class="stat-card">
+                    <p class="text-muted">Monthly Earnings</p>
+                    <div class="stat-value">$4,520.00</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Total Students</p>
+                    <div class="stat-value">128</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Average Rating</p>
+                    <div class="stat-value">4.9 / 5.0</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Next Session</p>
+                    <div class="stat-value" style="font-size: 1.1rem; color: var(--primary);">In 45 mins</div>
+                </div>
+            </div>
+
+            <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-xl);">
+                <section class="card">
+                    <h3>Upcoming Sessions</h3>
+                    <div class="mt-2">
+                        <!-- Session items -->
+                        <div class="flex-between p-1" style="border-bottom: 1px solid var(--glass-border);">
+                            <div>
+                                <strong>John Doe</strong>
+                                <p class="text-muted" style="font-size: 0.8rem;">Topic: React Context API</p>
+                            </div>
+                            <div class="text-right">
+                                <p>Today, 4:00 PM</p>
+                                <button class="btn btn-secondary btn-sm" style="padding: 2px 8px;">Start</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="card">
+                    <h3>Quick Actions</h3>
+                    <div class="flex-column mt-2" style="gap: 10px;">
+                        <button class="btn btn-secondary btn-sm" style="width: 100%;">Update Availability</button>
+                        <button class="btn btn-secondary btn-sm" style="width: 100%;">Create Package</button>
+                        <button class="btn btn-secondary btn-sm" style="width: 100%;">View Earnings Report</button>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { DashboardSidebar } from '../../assets/js/components/DashboardSidebar.js';
+        document.getElementById('sidebar-placeholder').appendChild(DashboardSidebar('mentor.html'));
+    </script>
+</body>
+</html>

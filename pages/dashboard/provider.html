@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Provider Dashboard | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <div id="sidebar-placeholder"></div>
+
+        <main class="dashboard-main">
+            <header class="flex-between mb-4">
+                <h1>Service Management</h1>
+                <div>
+                    <span class="badge" style="background: var(--success); color: white;">Status: Available</span>
+                </div>
+            </header>
+
+            <div class="stats-card-grid">
+                <div class="stat-card">
+                    <p class="text-muted">Jobs Completed</p>
+                    <div class="stat-value">45</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Pending Requests</p>
+                    <div class="stat-value">3</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Total Earnings</p>
+                    <div class="stat-value">$3,200.00</div>
+                </div>
+                <div class="stat-card">
+                    <p class="text-muted">Avg Rating</p>
+                    <div class="stat-value">4.8</div>
+                </div>
+            </div>
+
+            <section class="card">
+                <h3>Current Job</h3>
+                <div class="mt-2 p-2 glass" style="border-radius: var(--radius-md);">
+                    <div class="flex-between">
+                        <div>
+                            <h4>Smart Home Setup</h4>
+                            <p class="text-muted">Location: 123 Future St, Tech City</p>
+                        </div>
+                        <button class="btn btn-primary btn-sm">Navigate 📍</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script type="module">
+        import { DashboardSidebar } from '../../assets/js/components/DashboardSidebar.js';
+        document.getElementById('sidebar-placeholder').appendChild(DashboardSidebar('provider.html'));
+    </script>
+</body>
+</html>

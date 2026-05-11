@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 80px;">
+        <div class="card" style="max-width: 800px; margin: 0 auto;">
+            <div class="flex-between">
+                <div class="flex-center" style="gap: 1.5rem;">
+                    <div class="service-icon-wrapper" style="width: 80px; height: 80px;">
+                        <span id="s-icon" style="font-size: 2.5rem;"></span>
+                    </div>
+                    <div>
+                        <h1 id="s-name"></h1>
+                        <span id="s-category" class="badge badge-primary"></span>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-muted">Starting at</p>
+                    <h2 id="s-price"></h2>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <h3>Service Description</h3>
+                <p id="s-desc" class="text-muted mt-1"></p>
+            </div>
+
+            <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+                <h3>Book this Service</h3>
+                <form id="booking-form" class="mt-2 grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>Preferred Date</label>
+                        <input type="date" class="input" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Preferred Time</label>
+                        <input type="time" class="input" required>
+                    </div>
+                    <div class="input-group" style="grid-column: span 2;">
+                        <label>Service Address</label>
+                        <textarea class="input" rows="3" placeholder="Enter your full address"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="grid-column: span 2;">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { Toast } from '../../assets/js/components/Toast.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        // Fake data
+        const services = {
+            '201': { name: 'Smart Home Setup', description: 'Advanced IoT device installation, including smart lights, thermostats, and security systems. We ensure everything is perfectly integrated into your preferred ecosystem.', category: 'Electrician', basePrice: '$120', icon: '🏠' }
+        };
+
+        const s = services[id] || services['201'];
+        document.getElementById('s-name').textContent = s.name;
+        document.getElementById('s-desc').textContent = s.description;
+        document.getElementById('s-category').textContent = s.category;
+        document.getElementById('s-price').textContent = s.basePrice;
+        document.getElementById('s-icon').textContent = s.icon;
+
+        document.getElementById('booking-form').onsubmit = (e) => {
+            e.preventDefault();
+            Toast.show('Service booking request sent!', 'success');
+            setTimeout(() => window.location.href = '/pages/services/listings.html', 2000);
+        };
+    </script>
+</body>
+</html>

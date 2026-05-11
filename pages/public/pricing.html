@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 100px;">
+        <div class="text-center mb-4 reveal">
+            <h1 class="text-gradient">Flexible Pricing</h1>
+            <p class="text-muted">Choose the plan that fits your growth.</p>
+        </div>
+
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <!-- Customer -->
+            <div class="card reveal" style="border: 1px solid var(--glass-border);">
+                <h3>User Account</h3>
+                <div class="my-2"><span style="font-size: 2.5rem; font-weight: 700;">Free</span></div>
+                <ul class="text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                    <li>✓ Browse Mentors</li>
+                    <li>✓ Shop Marketplace</li>
+                    <li>✓ Book Services</li>
+                    <li>✓ Basic Dashboard</li>
+                </ul>
+                <a href="../auth/signup.html" class="btn btn-primary w-full mt-4">Get Started</a>
+            </div>
+
+            <!-- Mentor/Vendor -->
+            <div class="card reveal" style="border: 2px solid var(--primary); transform: scale(1.05); background: rgba(0, 122, 255, 0.05);">
+                <div class="badge badge-primary mb-2">Most Popular</div>
+                <h3>Pro Partner</h3>
+                <div class="my-2"><span style="font-size: 2.5rem; font-weight: 700;">$29</span><span class="text-muted">/mo</span></div>
+                <ul class="text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                    <li>✓ Sell Products / Services</li>
+                    <li>✓ Listing Optimization</li>
+                    <li>✓ Advanced Analytics</li>
+                    <li>✓ Priority Support</li>
+                </ul>
+                <a href="../auth/signup.html" class="btn btn-primary w-full mt-4">Join as Pro</a>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="card reveal" style="border: 1px solid var(--glass-border);">
+                <h3>Enterprise</h3>
+                <div class="my-2"><span style="font-size: 2.5rem; font-weight: 700;">Custom</span></div>
+                <ul class="text-muted" style="list-style: none; padding: 0; line-height: 2;">
+                    <li>✓ Team Management</li>
+                    <li>✓ API Access</li>
+                    <li>✓ Dedicated Manager</li>
+                    <li>✓ Custom Integrations</li>
+                </ul>
+                <button class="btn btn-secondary w-full mt-4">Contact Sales</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { Footer } from '../../assets/js/components/Footer.js';
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+        document.getElementById('footer-placeholder').appendChild(Footer());
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <div id="sidebar-placeholder"></div>
+
+        <main class="dashboard-main">
+            <header class="flex-between mb-4">
+                <h1 id="welcome-msg">Dashboard</h1>
+                <div class="flex-center" style="gap: 1rem;">
+                    <button class="btn btn-secondary btn-sm">🔔 Notifications</button>
+                </div>
+            </header>
+
+            <div id="dashboard-content">
+                <!-- Content will be injected by router -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { DashboardSidebar } from '../../assets/js/components/DashboardSidebar.js';
+        import { initDashboardRouter } from '../../assets/js/modules/router.js';
+        import { store } from '../../assets/js/modules/state.js';
+
+        const user = store.getState().user;
+        document.getElementById('sidebar-placeholder').appendChild(DashboardSidebar('customer.html'));
+        if (user) document.getElementById('welcome-msg').textContent = `Welcome, ${user.name}`;
+
+        const routes = {
+            '#overview': `
+                <div class="stats-card-grid">
+                    <div class="stat-card">
+                        <p class="text-muted">Total Spent</p>
+                        <div class="stat-value">$1,240.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-muted">Active Orders</p>
+                        <div class="stat-value">2</div>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-muted">Reward Points</p>
+                        <div class="stat-value text-gradient">850</div>
+                    </div>
+                </div>
+                <section class="card mt-4">
+                    <h3>Recent Activity</h3>
+                    <div class="mt-2">
+                        <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid var(--glass-border);">
+                                    <th class="p-1">Date</th>
+                                    <th class="p-1">Activity</th>
+                                    <th class="p-1">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom: 1px solid var(--glass-border);">
+                                    <td class="p-1 text-muted">2023-10-25</td>
+                                    <td class="p-1">Ordered Quantum Watch</td>
+                                    <td class="p-1"><span class="badge badge-primary">Shipped</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            `,
+            '#orders': `
+                <div class="card">
+                    <h3>Your Orders</h3>
+                    <div class="p-4 text-center text-muted">
+                        No orders in the last 30 days.
+                        <br><br>
+                        <a href="../shop/listings.html" class="btn btn-primary btn-sm">Start Shopping</a>
+                    </div>
+                </div>
+            `,
+            '#bookings': `
+                <div class="card">
+                    <h3>Upcoming Sessions</h3>
+                    <div class="p-4 text-center text-muted">
+                        No upcoming mentor sessions.
+                    </div>
+                </div>
+            `,
+            '#wallet': `
+                <div class="card">
+                    <h3>Wallet Balance</h3>
+                    <div class="stat-value text-gradient mb-2">$0.00</div>
+                    <button class="btn btn-primary btn-sm">+ Top Up Wallet</button>
+                </div>
+            `
+        };
+
+        initDashboardRouter(routes);
+    </script>
+</body>
+</html>

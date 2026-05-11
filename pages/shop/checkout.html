@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 80px;">
+        <h1 class="mb-4">Checkout</h1>
+
+        <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-2xl);">
+            <div>
+                <section class="card mb-4">
+                    <h3>Shipping Information</h3>
+                    <form id="checkout-form" class="mt-2">
+                        <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div class="input-group">
+                                <label>First Name</label>
+                                <input type="text" class="input" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Last Name</label>
+                                <input type="text" class="input" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <label>Address</label>
+                            <input type="text" class="input" required>
+                        </div>
+                        <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                            <div class="input-group">
+                                <label>City</label>
+                                <input type="text" class="input" required>
+                            </div>
+                            <div class="input-group">
+                                <label>State</label>
+                                <input type="text" class="input" required>
+                            </div>
+                            <div class="input-group">
+                                <label>ZIP</label>
+                                <input type="text" class="input" required>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="card">
+                    <h3>Payment Method</h3>
+                    <div class="mt-2 p-2 glass" style="border-radius: var(--radius-md);">
+                        <p>💳 Credit Card (Demo)</p>
+                        <div class="input-group mt-1">
+                            <label>Card Number</label>
+                            <input type="text" class="input" placeholder="0000 0000 0000 0000">
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <aside>
+                <div class="card">
+                    <h3>Your Order</h3>
+                    <div id="order-items" class="mt-2">
+                        <!-- Items -->
+                    </div>
+                    <div class="flex-between mt-2 pt-2" style="border-top: 1px solid var(--glass-border); font-weight: 700;">
+                        <span>Total</span>
+                        <span id="final-total">$0</span>
+                    </div>
+                    <button id="place-order" class="btn btn-primary mt-4" style="width: 100%;">Place Order</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { store } from '../../assets/js/modules/state.js';
+        import { Cart } from '../../assets/js/modules/cart.js';
+        import { Toast } from '../../assets/js/components/Toast.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const cart = store.getState().cart;
+        const total = Cart.getTotal();
+        document.getElementById('final-total').textContent = `$${total}`;
+
+        document.getElementById('place-order').onclick = () => {
+            Toast.show('Order placed successfully! Redirecting...', 'success');
+            Cart.clear();
+            setTimeout(() => window.location.href = '/', 2000);
+        };
+    </script>
+</body>
+</html>

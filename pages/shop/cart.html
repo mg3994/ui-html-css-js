@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <style>
+        .cart-item {
+            display: grid;
+            grid-template-columns: 80px 1fr 120px 80px;
+            gap: var(--spacing-md);
+            align-items: center;
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        @media (max-width: 600px) {
+            .cart-item { grid-template-columns: 60px 1fr 80px; }
+            .cart-remove { grid-column: span 3; text-align: right; }
+        }
+    </style>
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 80px;">
+        <h1 class="mb-4">Shopping Cart</h1>
+
+        <div class="grid" style="grid-template-columns: 2fr 1fr; gap: var(--spacing-2xl);">
+            <div id="cart-items" class="card">
+                <!-- Items rendered here -->
+            </div>
+
+            <aside>
+                <div class="card">
+                    <h3>Order Summary</h3>
+                    <div class="flex-between mt-2">
+                        <span>Subtotal</span>
+                        <span id="subtotal">$0</span>
+                    </div>
+                    <div class="flex-between mt-1">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="flex-between mt-2 pt-2" style="border-top: 1px solid var(--glass-border); font-weight: 700;">
+                        <span>Total</span>
+                        <span id="total">$0</span>
+                    </div>
+                    <a href="checkout.html" class="btn btn-primary mt-4" style="width: 100%;">Proceed to Checkout</a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { store } from '../../assets/js/modules/state.js';
+        import { Cart } from '../../assets/js/modules/cart.js';
+        import { Component } from '../../assets/js/utils/component.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const renderCart = (cart) => {
+            const container = document.getElementById('cart-items');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center p-4">Your cart is empty.</p>';
+                return;
+            }
+
+            cart.forEach(item => {
+                const itemEl = Component.create('div', { className: 'cart-item' },
+                    Component.create('img', { src: item.image, style: 'width: 100%; border-radius: 4px;' }),
+                    Component.create('div', {},
+                        Component.create('h4', {}, item.name),
+                        Component.create('p', { className: 'text-muted' }, item.category)
+                    ),
+                    Component.create('div', { className: 'flex-center', style: 'gap: 10px;' },
+                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.id, item.quantity - 1) }, '-'),
+                        Component.create('span', {}, item.quantity.toString()),
+                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.id, item.quantity + 1) }, '+')
+                    ),
+                    Component.create('button', { className: 'btn btn-ghost cart-remove', style: 'color: var(--error);', onClick: () => Cart.removeItem(item.id) }, 'Remove')
+                );
+                container.appendChild(itemEl);
+            });
+
+            const total = Cart.getTotal();
+            document.getElementById('subtotal').textContent = `$${total}`;
+            document.getElementById('total').textContent = `$${total}`;
+        };
+
+        store.subscribe(state => renderCart(state.cart));
+        renderCart(store.getState().cart);
+    </script>
+</body>
+</html>

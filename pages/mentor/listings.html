@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Mentors | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <div id="app">
+        <header id="navbar-placeholder"></header>
+
+        <main class="container p-4" style="margin-top: 80px;">
+            <div class="section-header reveal">
+                <h2>Expert Mentors</h2>
+                <p>Accelerate your growth with 1-on-1 guidance from industry leaders.</p>
+            </div>
+
+            <div class="search-filters mb-4 flex-between" style="flex-wrap: wrap; gap: 1rem;">
+                <input type="text" class="input" placeholder="Search by name or skill..." style="flex: 1; min-width: 250px;">
+                <select class="input">
+                    <option value="">All Categories</option>
+                    <option value="coding">Coding</option>
+                    <option value="business">Business</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="ai">AI</option>
+                </select>
+            </div>
+
+            <div id="mentor-grid" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--spacing-xl);">
+                <!-- Mentors will be rendered here -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { MentorCard } from '../../assets/js/components/MentorCard.js';
+        import { Component } from '../../assets/js/utils/component.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const mentors = [
+            { id: 1, name: 'Alex Rivera', specialty: 'Senior Software Engineer', rating: 4.9, price: 80, tags: ['React', 'Node.js', 'System Design'], image: 'https://i.pravatar.cc/150?u=alex' },
+            { id: 2, name: 'Sarah Chen', specialty: 'Product Strategy Expert', rating: 5.0, price: 120, tags: ['Startup', 'Growth', 'PM'], image: 'https://i.pravatar.cc/150?u=sarah' },
+            { id: 3, name: 'Marcus Thorne', specialty: 'AI Research Scientist', rating: 4.8, price: 150, tags: ['Python', 'ML', 'Neural Networks'], image: 'https://i.pravatar.cc/150?u=marcus' },
+            { id: 4, name: 'Elena Rodriguez', specialty: 'Digital Marketing Director', rating: 4.7, price: 95, tags: ['SEO', 'Content Strategy', 'Ads'], image: 'https://i.pravatar.cc/150?u=elena' }
+        ];
+
+        const grid = document.getElementById('mentor-grid');
+        mentors.forEach(m => {
+            grid.appendChild(MentorCard(m));
+        });
+    </script>
+</body>
+</html>

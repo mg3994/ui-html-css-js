@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 100px; max-width: 800px;">
+        <h1 class="text-gradient text-center mb-4">Frequently Asked Questions</h1>
+
+        <div id="faq-container">
+            <!-- Accordions rendered here -->
+        </div>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { Footer } from '../../assets/js/components/Footer.js';
+        import { Accordion } from '../../assets/js/components/Accordion.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+        document.getElementById('footer-placeholder').appendChild(Footer());
+
+        const faqs = [
+            { title: "What is Antinna?", content: "Antinna is a hybrid platform combining mentorship, ecommerce, and handy services into one intelligent ecosystem." },
+            { title: "How do I become a Mentor?", content: "You can sign up as a Mentor through our signup page. You will need to provide your expertise and undergo a brief verification process." },
+            { title: "Is payment secure?", content: "Yes, we use industry-standard encryption and secure payment gateways (integrated placeholders) to ensure your data is safe." },
+            { title: "Can I be both a Buyer and a Vendor?", content: "Absolutely. Your account can be upgraded to a Vendor or Mentor role at any time through your dashboard settings." },
+            { title: "How do I track my orders?", content: "You can track all your orders, bookings, and sessions in real-time through your Customer Dashboard." }
+        ];
+
+        const container = document.getElementById('faq-container');
+        faqs.forEach(faq => container.appendChild(Accordion(faq.title, faq.content)));
+    </script>
+</body>
+</html>

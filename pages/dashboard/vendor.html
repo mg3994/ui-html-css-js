@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Dashboard | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-layout">
+        <div id="sidebar-placeholder"></div>
+
+        <main class="dashboard-main">
+            <header class="flex-between mb-4">
+                <h1 id="view-title">Vendor Portal</h1>
+                <div id="header-actions">
+                    <button class="btn btn-primary btn-sm">+ Add New Product</button>
+                </div>
+            </header>
+
+            <div id="dashboard-content">
+                <!-- Content will be injected by router -->
+            </div>
+        </main>
+    </div>
+
+    <script type="module">
+        import { DashboardSidebar } from '../../assets/js/components/DashboardSidebar.js';
+        import { initDashboardRouter } from '../../assets/js/modules/router.js';
+
+        document.getElementById('sidebar-placeholder').appendChild(DashboardSidebar('vendor.html'));
+
+        const routes = {
+            '#overview': `
+                <div class="stats-card-grid">
+                    <div class="stat-card">
+                        <p class="text-muted">Total Sales</p>
+                        <div class="stat-value">$12,850.00</div>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-muted">Orders (30d)</p>
+                        <div class="stat-value">154</div>
+                    </div>
+                    <div class="stat-card">
+                        <p class="text-muted">Inventory</p>
+                        <div class="stat-value">42 Items</div>
+                    </div>
+                </div>
+                <section class="card mt-4">
+                    <h3>Recent Activity</h3>
+                    <div class="p-2 text-center text-muted">No recent sales today.</div>
+                </section>
+            `,
+            '#products': `
+                <div class="card">
+                    <h3>Inventory Management</h3>
+                    <table class="w-full mt-2" style="border-collapse: collapse;">
+                        <thead>
+                            <tr style="text-align: left; border-bottom: 1px solid var(--glass-border);">
+                                <th class="p-1">Product</th>
+                                <th class="p-1">Stock</th>
+                                <th class="p-1">Price</th>
+                                <th class="p-1">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-1">Quantum Watch</td>
+                                <td class="p-1">12</td>
+                                <td class="p-1">$299</td>
+                                <td class="p-1"><span class="badge" style="background: var(--success);">In Stock</span></td>
+                            </tr>
+                            <tr>
+                                <td class="p-1">Cyberpunk Jacket</td>
+                                <td class="p-1">0</td>
+                                <td class="p-1">$150</td>
+                                <td class="p-1"><span class="badge" style="background: var(--error);">Out of Stock</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `,
+            '#orders': `
+                <div class="card">
+                    <h3>Recent Orders</h3>
+                    <div class="p-4 text-center">
+                        <p class="text-muted">All orders are up to date.</p>
+                    </div>
+                </div>
+            `,
+            '#analytics': `
+                <div class="card">
+                    <h3>Sales Analytics</h3>
+                    <div style="height: 200px; background: var(--glass-bg); border-radius: var(--radius-md); position: relative;" class="flex-center">
+                        <span class="text-muted">[ Interactive Chart Placeholder ]</span>
+                        <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 60%; background: linear-gradient(0deg, var(--primary) 0%, transparent 100%); opacity: 0.2; clip-path: polygon(0 100%, 20% 40%, 40% 60%, 60% 20%, 80% 80%, 100% 50%, 100% 100%);"></div>
+                    </div>
+                </div>
+            `
+        };
+
+        initDashboardRouter(routes);
+    </script>
+</body>
+</html>

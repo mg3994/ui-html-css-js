@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ANTINNA | The Futuristic Ecosystem Platform</title>
+    <meta name="description" content="Antinna - A hybrid platform for Mentors, E-commerce, and Handy Services.">
+
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/layout.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/animations.css">
+
+    <style>
+        /* Custom styles for landing sections */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-xl);
+            margin-top: var(--spacing-2xl);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-xl);
+            padding: var(--spacing-2xl) 0;
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+            margin: var(--spacing-2xl) 0;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .cta-section {
+            background: var(--gradient-primary);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-2xl);
+            text-align: center;
+            color: white;
+            margin: var(--spacing-2xl) 0;
+        }
+
+        .cta-section h2 { font-size: var(--font-size-3xl); }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content reveal">
+                    <span class="badge badge-primary">Introducing Antinna</span>
+                    <h1 class="hero-title">The All-in-One <br><span class="text-gradient">Ecosystem</span> for Modern Life.</h1>
+                    <p class="hero-subtitle">Book expert mentors, shop premium products, and hire top-rated service professionals in one seamless platform.</p>
+                    <div class="flex-center" style="gap: 1rem;">
+                        <a href="#explore" class="btn btn-primary">Explore Platform</a>
+                        <a href="/pages/auth/signup.html" class="btn btn-secondary">Join as Partner</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="container">
+            <div class="stats-grid reveal">
+                <div class="text-center">
+                    <h3 class="text-gradient" style="font-size: 2.5rem;">50k+</h3>
+                    <p class="text-muted">Active Users</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-gradient" style="font-size: 2.5rem;">1k+</h3>
+                    <p class="text-muted">Expert Mentors</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-gradient" style="font-size: 2.5rem;">10k+</h3>
+                    <p class="text-muted">Products</p>
+                </div>
+                <div class="text-center">
+                    <h3 class="text-gradient" style="font-size: 2.5rem;">500+</h3>
+                    <p class="text-muted">Service Providers</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules Section -->
+        <section id="explore" class="container p-4">
+            <div class="section-header reveal">
+                <h2>One Platform. Three Pillars.</h2>
+                <p>Designed for your growth, lifestyle, and home needs.</p>
+            </div>
+
+            <div class="features-grid">
+                <!-- Mentor Pillar -->
+                <div class="card reveal">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🎓</div>
+                    <h3>Mentor Platform</h3>
+                    <p class="text-muted mt-1">Connect with industry leaders for 1-on-1 sessions in coding, business, AI, and more.</p>
+                    <a href="/pages/mentor/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Browse Mentors →</a>
+                </div>
+
+                <!-- Shop Pillar -->
+                <div class="card reveal">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🛍️</div>
+                    <h3>Multi-Vendor Shop</h3>
+                    <p class="text-muted mt-1">Discover premium gadgets, fashion, and digital products from verified vendors.</p>
+                    <a href="/pages/shop/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Start Shopping →</a>
+                </div>
+
+                <!-- Services Pillar -->
+                <div class="card reveal">
+                    <div style="font-size: 2rem; margin-bottom: 1rem;">🛠️</div>
+                    <h3>Home Services</h3>
+                    <p class="text-muted mt-1">Professional plumbers, electricians, and technicians just a click away.</p>
+                    <a href="/pages/services/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Book a Service →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="container">
+            <div class="cta-section reveal">
+                <h2>Ready to transform your experience?</h2>
+                <p style="margin: 1rem 0 2rem;">Join thousands of users who trust Antinna for their daily needs.</p>
+                <a href="/pages/auth/signup.html" class="btn" style="background: white; color: black;">Create Free Account</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="assets/js/app.js"></script>
+</body>
+</html>

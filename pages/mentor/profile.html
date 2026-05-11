@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentor Profile | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+    <style>
+        .profile-layout {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: var(--spacing-2xl);
+            margin-top: 40px;
+        }
+        @media (max-width: 992px) {
+            .profile-layout { grid-template-columns: 1fr; }
+        }
+        .availability-slot {
+            padding: 10px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+        .availability-slot:hover {
+            border-color: var(--primary);
+            background: var(--glass-bg);
+        }
+        .availability-slot.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 80px;">
+        <div class="profile-layout">
+            <!-- Sidebar Info -->
+            <aside>
+                <div class="card text-center">
+                    <img id="m-image" src="" alt="" style="width: 120px; height: 120px; border-radius: 50%; margin: 0 auto var(--spacing-md); border: 3px solid var(--primary);">
+                    <h2 id="m-name"></h2>
+                    <p id="m-specialty" class="text-muted"></p>
+                    <div id="m-rating" class="mt-1"></div>
+
+                    <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+                        <div class="flex-between mb-2">
+                            <span>Session Price</span>
+                            <span id="m-price" style="font-weight: 700;"></span>
+                        </div>
+                        <button id="book-btn" class="btn btn-primary" style="width: 100%;">Book Session</button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Info -->
+            <div class="flex-column" style="gap: var(--spacing-xl);">
+                <section class="card">
+                    <h3>About Mentor</h3>
+                    <p id="m-about" class="mt-2 text-muted">
+                        Highly experienced professional dedicated to helping mentees reach their full potential.
+                        With years of industry expertise, I provide actionable insights and personalized guidance.
+                    </p>
+                </section>
+
+                <section class="card">
+                    <h3>Specialties</h3>
+                    <div id="m-tags" class="mentor-tags mt-2"></div>
+                </section>
+
+                <section class="card">
+                    <h3>Availability</h3>
+                    <p class="text-muted mb-2">Select a time slot for your session</p>
+                    <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px;">
+                        <div class="availability-slot">09:00 AM</div>
+                        <div class="availability-slot">11:00 AM</div>
+                        <div class="availability-slot">02:00 PM</div>
+                        <div class="availability-slot">04:00 PM</div>
+                        <div class="availability-slot">06:00 PM</div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { Modal } from '../../assets/js/components/Modal.js';
+        import { Toast } from '../../assets/js/components/Toast.js';
+        import { Component } from '../../assets/js/utils/component.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id');
+
+        // Fake data fetching
+        const mentors = {
+            '1': { name: 'Alex Rivera', specialty: 'Senior Software Engineer', rating: 4.9, price: '$80/hr', tags: ['React', 'Node.js', 'System Design'], image: 'https://i.pravatar.cc/150?u=alex' },
+            '2': { name: 'Sarah Chen', specialty: 'Product Strategy Expert', rating: 5.0, price: '$120/hr', tags: ['Startup', 'Growth', 'PM'], image: 'https://i.pravatar.cc/150?u=sarah' }
+        };
+
+        const m = mentors[id] || mentors['1'];
+        document.getElementById('m-name').textContent = m.name;
+        document.getElementById('m-specialty').textContent = m.specialty;
+        document.getElementById('m-price').textContent = m.price;
+        document.getElementById('m-image').src = m.image;
+        document.getElementById('m-rating').innerHTML = `⭐ ${m.rating} (45 reviews)`;
+
+        const tagsContainer = document.getElementById('m-tags');
+        m.tags.forEach(tag => {
+            tagsContainer.appendChild(Component.create('span', { className: 'badge badge-primary' }, tag));
+        });
+
+        // Booking Logic
+        document.getElementById('book-btn').onclick = () => {
+            const modal = Modal.create('Confirm Booking',
+                Component.create('div', {},
+                    Component.create('p', {}, `You are booking a 1-hour session with ${m.name}.`),
+                    Component.create('p', { className: 'mt-1', style: 'font-weight: 700;' }, `Total: ${m.price}`)
+                ),
+                [
+                    { label: 'Cancel', className: 'btn-secondary' },
+                    { label: 'Confirm & Pay', className: 'btn-primary', onClick: () => {
+                        Toast.show('Booking confirmed! Check your email for details.', 'success');
+                    }}
+                ]
+            );
+            Modal.open(modal);
+        };
+
+        // Slot selection
+        document.querySelectorAll('.availability-slot').forEach(slot => {
+            slot.onclick = () => {
+                document.querySelectorAll('.availability-slot').forEach(s => s.classList.remove('selected'));
+                slot.classList.add('selected');
+            };
+        });
+    </script>
+</body>
+</html>

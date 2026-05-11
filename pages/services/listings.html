@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handy Services | ANTINNA</title>
+    <link rel="stylesheet" href="../../assets/css/variables.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+    <link rel="stylesheet" href="../../assets/css/layout.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+    <link rel="stylesheet" href="../../assets/css/animations.css">
+</head>
+<body>
+    <header id="navbar-placeholder"></header>
+
+    <main class="container p-4" style="margin-top: 80px;">
+        <div class="section-header reveal">
+            <h2>Professional Services</h2>
+            <p>Reliable experts for your home and lifestyle needs.</p>
+        </div>
+
+        <div class="search-filters mb-4 flex-between" style="gap: 1rem;">
+            <input type="text" class="input" placeholder="What service do you need?" style="flex: 1;">
+            <input type="text" class="input" placeholder="Your location" style="width: 200px;">
+        </div>
+
+        <div id="services-grid" class="grid" style="grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--spacing-xl);">
+            <!-- Services rendered here -->
+        </div>
+    </main>
+
+    <script type="module">
+        import { Navbar } from '../../assets/js/components/Navbar.js';
+        import { ServiceCard } from '../../assets/js/components/ServiceCard.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+
+        const services = [
+            { id: 201, name: 'Smart Home Setup', description: 'IoT device installation and configuration.', category: 'Electrician', basePrice: 120, icon: '🏠' },
+            { id: 202, name: 'Eco-Friendly Cleaning', description: 'Deep cleaning using sustainable products.', category: 'Cleaner', basePrice: 45, icon: '🧹' },
+            { id: 203, name: 'Custom Furniture Repair', description: 'Expert carpentry and restoration.', category: 'Carpenter', basePrice: 80, icon: '🪑' },
+            { id: 204, name: 'HVAC Optimization', description: 'AC maintenance and energy saving check.', category: 'AC Repair', basePrice: 95, icon: '❄️' }
+        ];
+
+        const grid = document.getElementById('services-grid');
+        services.forEach(s => grid.appendChild(ServiceCard(s)));
+    </script>
+</body>
+</html>
