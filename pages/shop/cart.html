@@ -74,18 +74,24 @@
             }
 
             cart.forEach(item => {
+                const variantText = Object.entries(item.selectedVariants || {})
+                    .filter(([k]) => k !== 'priceModifier')
+                    .map(([k, v]) => `${k}: ${v}`)
+                    .join(', ');
+
                 const itemEl = Component.create('div', { className: 'cart-item' },
                     Component.create('img', { src: item.image, style: 'width: 100%; border-radius: 4px;' }),
                     Component.create('div', {},
                         Component.create('h4', {}, item.name),
-                        Component.create('p', { className: 'text-muted' }, item.category)
+                        Component.create('p', { className: 'text-muted small' }, variantText || item.category),
+                        Component.create('p', { style: 'font-weight: 600;' }, `$${item.price.toFixed(2)}`)
                     ),
                     Component.create('div', { className: 'flex-center', style: 'gap: 10px;' },
-                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.id, item.quantity - 1) }, '-'),
+                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.cartItemId, -1) }, '-'),
                         Component.create('span', {}, item.quantity.toString()),
-                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.id, item.quantity + 1) }, '+')
+                        Component.create('button', { className: 'btn btn-secondary btn-sm', onClick: () => Cart.updateQuantity(item.cartItemId, 1) }, '+')
                     ),
-                    Component.create('button', { className: 'btn btn-ghost cart-remove', style: 'color: var(--error);', onClick: () => Cart.removeItem(item.id) }, 'Remove')
+                    Component.create('button', { className: 'btn btn-ghost cart-remove', style: 'color: var(--error);', onClick: () => Cart.removeItem(item.cartItemId) }, 'Remove')
                 );
                 container.appendChild(itemEl);
             });

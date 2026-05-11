@@ -4,135 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ANTINNA | The Futuristic Ecosystem Platform</title>
-    <meta name="description" content="Antinna - A hybrid platform for Mentors, E-commerce, and Handy Services.">
-
-
-    <!-- CSS -->
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/base.css">
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/components.css">
     <link rel="stylesheet" href="assets/css/animations.css">
-
     <style>
-        /* Custom styles for landing sections */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: var(--spacing-xl);
-            margin-top: var(--spacing-2xl);
+        .hero-visual {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw; height: 80vw;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(100px);
+            animation: pulse 10s infinite alternate;
         }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: var(--spacing-xl);
-            padding: var(--spacing-2xl) 0;
-            border-top: 1px solid var(--glass-border);
-            border-bottom: 1px solid var(--glass-border);
-            margin: var(--spacing-2xl) 0;
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.2); }
         }
 
-        @media (max-width: 768px) {
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
-
-        .cta-section {
-            background: var(--gradient-primary);
+        .module-card {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            background-size: cover;
+            background-position: center;
             border-radius: var(--radius-xl);
-            padding: var(--spacing-2xl);
-            text-align: center;
-            color: white;
-            margin: var(--spacing-2xl) 0;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--color-glass-border);
         }
 
-        .cta-section h2 { font-size: var(--font-size-3xl); }
+        .module-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 100%);
+        }
+
+        .module-content { position: relative; z-index: 1; }
     </style>
 </head>
-<body>
-    <div id="app">
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="container">
-                <div class="hero-content reveal">
-                    <span class="badge badge-primary">Introducing Antinna</span>
-                    <h1 class="hero-title">The All-in-One <br><span class="text-gradient">Ecosystem</span> for Modern Life.</h1>
-                    <p class="hero-subtitle">Book expert mentors, shop premium products, and hire top-rated service professionals in one seamless platform.</p>
-                    <div class="flex-center" style="gap: 1rem;">
-                        <a href="#explore" class="btn btn-primary">Explore Platform</a>
-                        <a href="/pages/auth/signup.html" class="btn btn-secondary">Join as Partner</a>
-                    </div>
+<body style="background: var(--color-bg); color: var(--text-main);">
+    <div class="hero-visual"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div id="navbar-placeholder"></div>
+
+    <main>
+    <!-- Hero -->
+    <section class="hero" style="min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+        <div class="container">
+            <div class="reveal">
+                <span class="badge badge-outline mb-2" style="color: var(--primary);">Ecosystem 2.0</span>
+                <h1 style="font-size: clamp(3rem, 10vw, 7rem); font-weight: 800; line-height: 0.9; margin-bottom: 2rem;" class="text-gradient">
+                    Intelligent.<br>Integrated.<br>Infinite.
+                </h1>
+                <p class="text-muted" style="max-width: 600px; margin: 0 auto 3rem; font-size: 1.2rem;">
+                    The world's first hybrid platform combining expert mentorship, premium commerce, and professional home services.
+                </p>
+                <div class="flex-center" style="gap: 1.5rem;">
+                    <a href="/pages/shop/listings.html" class="btn btn-primary">Start Exploring</a>
+                    <a href="/pages/public/about.html" class="btn btn-glass">Learn More</a>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Stats -->
-        <section class="container">
-            <div class="stats-grid reveal">
-                <div class="text-center">
-                    <h3 class="text-gradient" style="font-size: 2.5rem;">50k+</h3>
-                    <p class="text-muted">Active Users</p>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-gradient" style="font-size: 2.5rem;">1k+</h3>
-                    <p class="text-muted">Expert Mentors</p>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-gradient" style="font-size: 2.5rem;">10k+</h3>
-                    <p class="text-muted">Products</p>
-                </div>
-                <div class="text-center">
-                    <h3 class="text-gradient" style="font-size: 2.5rem;">500+</h3>
-                    <p class="text-muted">Service Providers</p>
+    <!-- Pillar Modules -->
+    <section class="container py-4">
+        <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+            <!-- Mentor -->
+            <div class="module-card reveal" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800');">
+                <div class="module-content">
+                    <h2 class="mb-1">Mentorship</h2>
+                    <p class="text-muted mb-2">Learn from the top 1% of global experts.</p>
+                    <a href="/pages/mentor/listings.html" class="btn btn-glass btn-sm">Browse Mentors</a>
                 </div>
             </div>
-        </section>
-
-        <!-- Modules Section -->
-        <section id="explore" class="container p-4">
-            <div class="section-header reveal">
-                <h2>One Platform. Three Pillars.</h2>
-                <p>Designed for your growth, lifestyle, and home needs.</p>
-            </div>
-
-            <div class="features-grid">
-                <!-- Mentor Pillar -->
-                <div class="card reveal">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🎓</div>
-                    <h3>Mentor Platform</h3>
-                    <p class="text-muted mt-1">Connect with industry leaders for 1-on-1 sessions in coding, business, AI, and more.</p>
-                    <a href="/pages/mentor/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Browse Mentors →</a>
-                </div>
-
-                <!-- Shop Pillar -->
-                <div class="card reveal">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🛍️</div>
-                    <h3>Multi-Vendor Shop</h3>
-                    <p class="text-muted mt-1">Discover premium gadgets, fashion, and digital products from verified vendors.</p>
-                    <a href="/pages/shop/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Start Shopping →</a>
-                </div>
-
-                <!-- Services Pillar -->
-                <div class="card reveal">
-                    <div style="font-size: 2rem; margin-bottom: 1rem;">🛠️</div>
-                    <h3>Home Services</h3>
-                    <p class="text-muted mt-1">Professional plumbers, electricians, and technicians just a click away.</p>
-                    <a href="/pages/services/listings.html" class="btn btn-ghost mt-2 p-0" style="color: var(--primary);">Book a Service →</a>
+            <!-- Marketplace -->
+            <div class="module-card reveal" style="background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800');">
+                <div class="module-content">
+                    <h2 class="mb-1">Marketplace</h2>
+                    <p class="text-muted mb-2">Curated products for a modern lifestyle.</p>
+                    <a href="/pages/shop/listings.html" class="btn btn-glass btn-sm">Go Shopping</a>
                 </div>
             </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="container">
-            <div class="cta-section reveal">
-                <h2>Ready to transform your experience?</h2>
-                <p style="margin: 1rem 0 2rem;">Join thousands of users who trust Antinna for their daily needs.</p>
-                <a href="/pages/auth/signup.html" class="btn" style="background: white; color: black;">Create Free Account</a>
+            <!-- Services -->
+            <div class="module-card reveal" style="background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800');">
+                <div class="module-content">
+                    <h2 class="mb-1">Home Services</h2>
+                    <p class="text-muted mb-2">Reliable professionals at your doorstep.</p>
+                    <a href="/pages/services/listings.html" class="btn btn-glass btn-sm">Book Service</a>
+                </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
 
-    <!-- Scripts -->
-    <script type="module" src="assets/js/app.js"></script>
+    <!-- Stats -->
+    <section class="container py-4 text-center">
+        <div class="glass-card reveal" style="padding: 4rem;">
+            <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 3rem;">
+                <article>
+                    <h3 class="text-gradient" style="font-size: 3rem;">500k+</h3>
+                    <p class="text-muted small">Transactions</p>
+                </article>
+                <article>
+                    <h3 class="text-gradient" style="font-size: 3rem;">50k+</h3>
+                    <p class="text-muted small">Experts</p>
+                </article>
+                <article>
+                    <h3 class="text-gradient" style="font-size: 3rem;">99.9%</h3>
+                    <p class="text-muted small">Satisfaction</p>
+                </article>
+            </div>
+        </div>
+    </section>
+    </main>
+
+    <footer id="footer-placeholder"></footer>
+
+    <script type="module">
+        import { Navbar } from './assets/js/components/Navbar.js';
+        import { Footer } from './assets/js/components/Footer.js';
+
+        document.getElementById('navbar-placeholder').appendChild(Navbar());
+        document.getElementById('footer-placeholder').appendChild(Footer());
+
+        // Simple Intersection Observer for reveals
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal-active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
 </body>
 </html>

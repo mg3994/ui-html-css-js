@@ -1,7 +1,10 @@
 import { Component } from '../utils/component.js';
 import { store } from '../modules/state.js';
+import { Transitions } from '../modules/transitions.js';
 
 export const DashboardSidebar = (activePage) => {
+    Transitions.init();
+
     const user = store.getState().user || { name: 'User', role: 'customer' };
 
     const menuItems = {

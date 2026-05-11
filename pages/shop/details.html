@@ -9,108 +9,152 @@
     <link rel="stylesheet" href="../../assets/css/layout.css">
     <link rel="stylesheet" href="../../assets/css/components.css">
     <link rel="stylesheet" href="../../assets/css/animations.css">
+    <style>
+        .product-gallery { position: sticky; top: 100px; }
+        .variant-section { margin-bottom: 2rem; }
+        .variant-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 0.75rem; display: block; }
+        .swatch-group, .chip-group { display: flex; gap: 12px; flex-wrap: wrap; }
+    </style>
 </head>
-<body>
+<body style="background: var(--color-bg); color: var(--text-main);">
     <header id="navbar-placeholder"></header>
 
-    <main class="container p-4" style="margin-top: 80px;">
-        <div id="product-detail-container">
-            <!-- Dynamic Content -->
-            <div class="flex" style="gap: 4rem; align-items: start; flex-wrap: wrap;">
-                <div style="flex: 1; min-width: 300px;">
-                    <div class="card p-0 overflow-hidden" style="border-radius: var(--radius-xl);">
-                        <img id="product-image" src="" alt="Product" style="width: 100%; aspect-ratio: 1; object-fit: cover;">
-                    </div>
-                </div>
-                <div style="flex: 1.2; min-width: 300px;">
-                    <nav class="mb-2">
-                        <a href="listings.html" class="text-muted" style="text-decoration: none;">&larr; Back to Shop</a>
-                    </nav>
-                    <span id="product-category" class="badge badge-primary mb-2">Category</span>
-                    <h1 id="product-name" class="text-gradient mb-2" style="font-size: var(--font-size-4xl);">Product Name</h1>
-                    <div class="flex mb-4" style="gap: 0.5rem; color: var(--warning);">
-                        <span>★★★★★</span>
-                        <span class="text-muted">(48 Reviews)</span>
-                    </div>
-                    <div class="mb-4">
-                        <span id="product-price" style="font-size: var(--font-size-3xl); font-weight: 700;">$0</span>
-                    </div>
-                    <p id="product-description" class="text-muted mb-4" style="line-height: 1.6;">
-                        Experience the next generation of performance and design. Our premium products are crafted with precision and the highest quality materials to ensure a futuristic experience today.
-                    </p>
-
-                    <div class="card mb-4" style="background: var(--glass-bg);">
-                        <div class="flex-between mb-2">
-                            <span>Quantity</span>
-                            <div class="flex" style="gap: 1rem; align-items: center;">
-                                <button class="btn btn-secondary btn-sm" onclick="updateQty(-1)">-</button>
-                                <span id="qty-value">1</span>
-                                <button class="btn btn-secondary btn-sm" onclick="updateQty(1)">+</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex" style="gap: 1rem;">
-                        <button id="add-to-cart-btn" class="btn btn-primary" style="flex: 1;">Add to Cart</button>
-                        <button class="btn btn-secondary">Wishlist</button>
-                    </div>
-
-                    <div class="mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
-                        <div class="flex-between mb-2">
-                            <span class="text-muted">Vendor</span>
-                            <span>TechNova Solutions</span>
-                        </div>
-                        <div class="flex-between mb-2">
-                            <span class="text-muted">Delivery</span>
-                            <span>2-4 Business Days</span>
-                        </div>
-                        <div class="flex-between">
-                            <span class="text-muted">SKU</span>
-                            <span>ANT-QW-2024</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <main class="container p-4" style="margin-top: 100px;">
+        <div id="product-root" class="grid" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4rem; align-items: start;">
+            <!-- Loading state or injected content -->
         </div>
     </main>
 
     <script type="module">
         import { Navbar } from '../../assets/js/components/Navbar.js';
-        import { store } from '../../assets/js/modules/state.js';
+        import { MOCK_PRODUCTS } from '../../assets/js/modules/data.js';
         import { addToCart } from '../../assets/js/modules/cart.js';
-        import { showToast } from '../../assets/js/components/Toast.js';
+        import { Toast } from '../../assets/js/components/Toast.js';
+        import { Component } from '../../assets/js/utils/component.js';
 
         document.getElementById('navbar-placeholder').appendChild(Navbar());
 
-        // Mock data retrieval based on URL ID (simulated)
-        const products = {
-            101: { id: 101, name: 'Quantum Watch', category: 'Electronics', price: 299, image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800' },
-            102: { id: 102, name: 'Cyberpunk Jacket', category: 'Fashion', price: 150, image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=800' },
-            103: { id: 103, name: 'Neon Keyboard', category: 'Electronics', price: 120, image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?w=800' },
-            104: { id: 104, name: 'AI Design Kit', category: 'Digital', price: 49, image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800' }
-        };
-
         const params = new URLSearchParams(window.location.search);
-        const productId = params.get('id') || 101;
-        const product = products[productId] || products[101];
+        const productId = params.get('id');
+        const product = MOCK_PRODUCTS.find(p => p.id === productId) || MOCK_PRODUCTS[0];
 
-        document.getElementById('product-image').src = product.image;
-        document.getElementById('product-name').textContent = product.name;
-        document.getElementById('product-category').textContent = product.category;
-        document.getElementById('product-price').textContent = `$${product.price}`;
+        let selectedVariants = {};
 
-        let currentQty = 1;
-        window.updateQty = (val) => {
-            currentQty = Math.max(1, currentQty + val);
-            document.getElementById('qty-value').textContent = currentQty;
+        // Initialize defaults
+        if (product.variants) {
+            if (product.variants.colors) selectedVariants.color = product.variants.colors[0].name;
+            if (product.variants.sizes) selectedVariants.size = product.variants.sizes[0];
+            if (product.variants.units) {
+                selectedVariants.unit = product.variants.units[0].label;
+                selectedVariants.priceModifier = product.variants.units[0].priceModifier;
+            }
+            if (product.variants.weights) {
+                selectedVariants.weight = product.variants.weights[0].label;
+                selectedVariants.priceModifier = product.variants.weights[0].priceModifier;
+            }
+        }
+
+        const renderProduct = () => {
+            const root = document.getElementById('product-root');
+            root.innerHTML = '';
+
+            // Left: Gallery
+            const gallery = Component.create('div', { className: 'product-gallery' },
+                Component.create('div', { className: 'glass-card', style: 'padding: 0; aspect-ratio: 1; border-radius: var(--radius-xl);' },
+                    Component.create('img', {
+                        src: product.image,
+                        style: 'width: 100%; height: 100%; object-fit: cover; border-radius: var(--radius-xl);'
+                    })
+                )
+            );
+
+            // Right: Info
+            const info = Component.create('div', { className: 'product-info' },
+                Component.create('div', { className: 'mb-4' },
+                    Component.create('span', { className: 'text-muted small', style: 'letter-spacing: 2px;' }, product.category.toUpperCase()),
+                    Component.create('h1', { className: 'text-gradient', style: 'font-size: 3.5rem; line-height: 1.1; margin: 0.5rem 0;' }, product.name),
+                    Component.create('div', { className: 'flex', style: 'gap: 1rem; align-items: center;' },
+                        Component.create('span', { style: 'font-size: 2rem; font-weight: 600;' }, `$${(product.price + (selectedVariants.priceModifier || 0)).toFixed(2)}`),
+                        Component.create('span', { className: 'badge badge-outline', style: 'color: var(--success);' }, 'In Stock')
+                    )
+                ),
+
+                Component.create('p', { className: 'text-muted mb-4', style: 'font-size: 1.1rem; line-height: 1.6;' }, product.description),
+
+                // Variants Section
+                Component.create('div', { className: 'variants-container' },
+                    // Colors
+                    product.variants?.colors ? Component.create('div', { className: 'variant-section' },
+                        Component.create('label', { className: 'variant-label' }, `Color: ${selectedVariants.color}`),
+                        Component.create('div', { className: 'swatch-group' },
+                            ...product.variants.colors.map(c => Component.create('div', {
+                                className: `variant-swatch ${selectedVariants.color === c.name ? 'active' : ''}`,
+                                style: `background: ${c.hex};`,
+                                onClick: () => { selectedVariants.color = c.name; renderProduct(); }
+                            }))
+                        )
+                    ) : null,
+
+                    // Sizes
+                    product.variants?.sizes ? Component.create('div', { className: 'variant-section' },
+                        Component.create('label', { className: 'variant-label' }, `Size: ${selectedVariants.size}`),
+                        Component.create('div', { className: 'chip-group' },
+                            ...product.variants.sizes.map(s => Component.create('div', {
+                                className: `variant-chip ${selectedVariants.size === s ? 'active' : ''}`,
+                                onClick: () => { selectedVariants.size = s; renderProduct(); }
+                            }, s))
+                        )
+                    ) : null,
+
+                    // Units / Weights
+                    (product.variants?.units || product.variants?.weights) ? Component.create('div', { className: 'variant-section' },
+                        Component.create('label', { className: 'variant-label' }, `Select ${product.variants.units ? 'Volume' : 'Weight'}`),
+                        Component.create('div', { className: 'chip-group' },
+                            ...(product.variants.units || product.variants.weights).map(v => Component.create('div', {
+                                className: `variant-chip ${ (selectedVariants.unit || selectedVariants.weight) === v.label ? 'active' : ''}`,
+                                onClick: () => {
+                                    if (product.variants.units) selectedVariants.unit = v.label;
+                                    else selectedVariants.weight = v.label;
+                                    selectedVariants.priceModifier = v.priceModifier;
+                                    renderProduct();
+                                }
+                            }, v.label))
+                        )
+                    ) : null
+                ),
+
+                Component.create('div', { className: 'flex mt-4', style: 'gap: 1rem;' },
+                    Component.create('button', {
+                        className: 'btn btn-primary',
+                        style: 'flex: 2; height: 60px; font-size: 1.1rem;',
+                        onClick: () => {
+                            addToCart(product, { ...selectedVariants });
+                            Toast.show('Added to bag', 'success');
+                        }
+                    }, 'Add to Bag'),
+                    Component.create('button', {
+                        className: 'btn btn-glass',
+                        style: 'flex: 1; height: 60px;'
+                    }, '♡')
+                ),
+
+                Component.create('div', { className: 'mt-4 pt-4', style: 'border-top: 1px solid var(--color-glass-border);' },
+                    Component.create('div', { className: 'flex-between mb-2 small text-muted' },
+                        Component.create('span', {}, 'Vendor'),
+                        Component.create('span', { style: 'color: var(--text-main);' }, product.vendor)
+                    ),
+                    Component.create('div', { className: 'flex-between small text-muted' },
+                        Component.create('span', {}, 'Shipping'),
+                        Component.create('span', { style: 'color: var(--text-main);' }, 'Free Express Shipping')
+                    )
+                )
+            );
+
+            root.appendChild(gallery);
+            root.appendChild(info);
         };
 
-        document.getElementById('add-to-cart-btn').addEventListener('click', () => {
-            for(let i=0; i<currentQty; i++) {
-                addToCart(product);
-            }
-            showToast(`${currentQty} x ${product.name} added to cart!`, 'success');
-        });
+        renderProduct();
     </script>
 </body>
 </html>

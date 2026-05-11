@@ -18,6 +18,40 @@ body {
     line-height: 1.5;
     overflow-x: hidden;
     transition: background-color var(--transition-base), color var(--transition-base);
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1;
+    mask-image: radial-gradient(circle at center, black, transparent 80%);
+}
+
+/* Background Glowing Orbs */
+.orb {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(100px);
+    z-index: -2;
+    opacity: 0.08;
+    pointer-events: none;
+    animation: orb-float 20s infinite alternate ease-in-out;
+}
+
+.orb-1 { top: -200px; right: -200px; background: var(--primary); }
+.orb-2 { bottom: -200px; left: -200px; background: var(--secondary); }
+
+@keyframes orb-float {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(100px, 50px) scale(1.1); }
 }
 
 a {
@@ -82,7 +116,7 @@ input, select, textarea {
 
 .text-center { text-align: center; }
 .text-gradient {
-    background: var(--gradient-primary);
+    background: var(--grad-linear);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

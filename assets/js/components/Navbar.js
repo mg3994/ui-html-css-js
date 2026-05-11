@@ -1,8 +1,12 @@
 import { Component } from '../utils/component.js';
+import { Transitions } from '../modules/transitions.js';
 
 export const Navbar = () => {
-    const nav = Component.create('nav', { className: 'navbar' },
-        Component.create('div', { className: 'container' },
+    // Initialize transitions on every page that includes the Navbar
+    Transitions.init();
+
+    const nav = Component.create('header', { className: 'navbar' },
+        Component.create('nav', { className: 'container', 'aria-label': 'Main Navigation' },
             Component.create('a', { href: '/', className: 'nav-logo' },
                 Component.create('span', { className: 'text-gradient' }, 'ANTINNA')
             ),

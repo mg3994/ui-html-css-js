@@ -40,7 +40,7 @@
         ];
 
         const container = document.getElementById('faq-container');
-        faqs.forEach(faq => container.appendChild(Accordion(faq.title, faq.content)));
+        container.appendChild(Accordion.create(faqs));
     </script>
 </body>
 </html>
